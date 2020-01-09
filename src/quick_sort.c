@@ -31,8 +31,10 @@ typedef struct NODES_T{}
 
 static void swap(int *a, int *b); 
 static int partition(int array[], int start, int end);
+static void partition_3way(int array[],int start, int end, int *midStart, int *midEnd);
 static void qsort_r(int array[], int start, int end);
 static void qsort_i(int array[], int start, int end);
+static void qsort_3way(int array[],int start,int end);
 
 
 static Node_t *lastNode(Node_t *list);
@@ -258,7 +260,56 @@ static void qsort_i(int array[], int start, int end)
     free(pStack);
 }
 
+static void partition_3way(int array[], int start, int end, int *midStart, int *midEnd)
+{
+    int mid;
+	int pivot;
+    if( end - start <=1 )
+	{
+	    if (array[end]<array[start])
+	    {
+		    swap(&array[start],&array[end]);
+			*midStart = start;
+			*midEnd = end;
+			return;
+		}
+		pivot = array[end];
+		mid = start;
+		while (mid <= end)
+		{
+		    if(array[mid] < pivot)
+			{
+			    swap(&array[start++],&array[mid++]);
+			}
+			else if(array[mid] == pivot )
+			{
+			    mid++;
+			}
+			else 
+			{
+			    swap(&array[mid++],&array[end--]);
+			}
+		}
+		*midStart = start - 1;
+		*midEnd = mid;
+	}
 
+}
+static void qsort_3way(int array[], int start, int end)
+{
+    if (!array)
+    {
+        printf("ERROR:Array is invalid\n");
+        return;
+    }
+    if( end >= start )
+    {
+	    int l,h;
+		partition(array,start,end,&l,&h);
+		qsort_3way(array,start,l);
+		qsort_3way(array,h,end);
+	}
+}
 
 static void dump(int array[],size_t size)
 {
