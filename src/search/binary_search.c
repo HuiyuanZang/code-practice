@@ -70,6 +70,78 @@ static int binary_search_i(int array[],size_t size, int target)
 	return -1;
 }
 
+static int binary_search_rightmost(int array[], size_t n, int x)
+{
+    int l,h,m;
+	if ( !array || n==0 )
+	{
+	    printf("ERROR:Invalid array!\n");
+		return -1;
+	}
+	l = 0;
+	h = n-1;
+	while( l<=h )
+	{
+	    m = l + ((h-l)>>1);
+		if ( array[mid] == x )
+		{
+		    if ( mid == 0 )//arr[0] == x
+			{ 
+			    return mid;
+			}
+			else if ( array[mid-1] != x ) //arr[mid] is already rightmost element such as value is x
+			{
+			    return mid;
+			}
+		}
+
+		if ( array[mid] >= x)
+		{
+		    h = mid - 1;    
+		}
+		else
+		{
+		    l = mid + 1;
+		}
+
+	}
+}
+static int binary_search_leftmost(int array[], size_t n, int x)
+{
+    int l,h,m;
+	if ( !array || n==0 )
+	{
+	    printf("ERROR:Invalid array!\n");
+		return -1;
+	}
+	l = 0;
+	h = n-1;
+	while( l<=h )
+	{
+	    m = l + ((h-l)>>1);
+		if ( array[mid] == x )
+		{
+		    if ( mid == n-1 )//arr[n-1] == x
+			{ 
+			    return mid;
+			}
+			else if ( array[mid+1] != x ) //arr[mid] is already rightmost element such as value is x
+			{
+			    return mid;
+			}
+		}
+
+		if ( array[mid] <= x)
+		{
+		    l = mid + 1;    
+		}
+		else
+		{
+		    h = mid - 1;
+		}
+
+	}
+}
 
 int main(int argc, char *argv[])
 {
